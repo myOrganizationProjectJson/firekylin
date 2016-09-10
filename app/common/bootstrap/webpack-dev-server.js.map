@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/bootstrap/webpack-dev-server.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;;;AAAA;;;;AACA;;;;AACA;;;;AACA;;;;AACA;;;;;;AAEA,IAAI,OAAO,iBAAc,KAArB,KAAgC,QAApC,EAA+C;AAC7C,mBAAc,KAAd,GAAsB,CACpB,iBAAc,KADM,EAEpB,wBAFoB,EAGpB,+BAHoB,CAAtB;AAKD;;AAED,IAAI,CAAC,MAAM,OAAN,CAAc,iBAAc,OAA5B,CAAL,EAA4C;AAC1C,mBAAc,OAAd,GAAwB,EAAxB;AACD;AACD,iBAAc,OAAd,CAAsB,IAAtB,CAA2B,IAAI,kBAAQ,0BAAZ,EAA3B;;AAEA,IAAI,UAAU,wCAAd;;AAEA,SAAS,MAAT,GAAyB;AACvB,SAAO,UAAS,IAAT,EAAe;AACpB,WAAO,sBAAY,UAAS,OAAT,EAAkB,MAAlB,EAA0B;AAC3C,UAAI,MAAM,0BAAY,IAAZ,CAAV;AACA,UAAI,GAAJ,CACE,oCAAqB,OAArB,CADF;AAGA,UAAI,GAAJ,CACE,oCAAqB,OAArB,CADF;AAGA,UAAI,GAAJ,CAAQ,OAAR;AACD,KATM,CAAP;AAUD,GAXD;AAYD;;kBAEc,M",
+    "file": "../../../src/common/bootstrap/webpack-dev-server.js",
+    "sourcesContent": [
+        "import connect from 'http-connect';\nimport webpackDevMiddleware from 'webpack-dev-middleware';\nimport webpackHotMiddleware from 'webpack-hot-middleware';\nimport webpack from 'webpack';\nimport webpackConfig from '../../../config.js';\n\nif( typeof(webpackConfig.entry) === 'string' ) {\n  webpackConfig.entry = [\n    webpackConfig.entry,\n    'webpack/hot/dev-server',\n    'webpack-hot-middleware/client'\n  ];\n}\n\nif( !Array.isArray(webpackConfig.plugins) ) {\n  webpackConfig.plugins = [];\n}\nwebpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());\n\nvar compile = webpack(webpackConfig);\n\nfunction server(...args) {\n  return function(http) {\n    return new Promise(function(resolve, reject) {\n      var app = new connect(http);\n      app.use(\n        webpackDevMiddleware(compile)\n      );\n      app.use(\n        webpackHotMiddleware(compile)\n      );\n      app.use(resolve);\n    })\n  }\n}\n\nexport default server;\n"
+    ]
+}

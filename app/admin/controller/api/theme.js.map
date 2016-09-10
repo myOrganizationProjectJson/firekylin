@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/admin/controller/api/theme.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;AAEA;;;;AACA;;;;AACA;;;;;;AAEA,IAAM,YAAY,eAAK,IAAL,CAAU,MAAM,aAAhB,EAA+B,OAA/B,CAAlB;;;;;;;;;;mBAGQ,S;;;;UACA,M,EACA,O;;;;;;qBADgB,MAAM,SAAN,CAAgB,aAAG,OAAnB,EAA4B,SAA5B,C;;;AAAhB,oB;AACA,qB,GAAU,MAAM,SAAN,CAAgB,aAAG,KAAnB,C;;AACd,uBAAS,OAAO,GAAP,CAAW;AAAA,uBAAU,EAAC,IAAI,KAAL,EAAY,aAAa,eAAK,IAAL,CAAU,SAAV,EAAqB,KAArB,EAA4B,cAA5B,CAAzB,EAAV;AAAA,eAAX,EACO,MADP;AAAA,qFACc,iBAAM,KAAN;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iCAAqB,QAAQ,MAAM,WAAd,CAArB;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,iBADd;AAAA;AAAA;AAAA;AAAA,mBAEO,GAFP,CAEW;AAAA,oBAAE,EAAF,QAAE,EAAF;AAAA,oBAAM,WAAN,QAAM,WAAN;AAAA,uBAAuB,MAAM,MAAN,CAAa,EAAC,MAAD,EAAb,EAAmB,MAAM,OAAN,CAAc,WAAd,CAAnB,CAAvB;AAAA,eAFX,CAAT;gDAGO,KAAK,OAAL,CAAa,MAAb,C",
+    "file": "../../../../src/admin/controller/api/theme.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport fs from 'fs';\nimport path from 'path';\nimport Base from './base.js';\n\nconst THEME_DIR = path.join(think.RESOURCE_PATH, 'theme');\n\nexport default class extends Base {\n  async getAction(){\n    let themes = (await think.promisify(fs.readdir)(THEME_DIR));\n    let isExist = think.promisify(fs.exist);\n    themes = themes.map(theme => ({id: theme, __info_file: path.join(THEME_DIR, theme, 'package.json')}))\n                   .filter(async theme => await isExist(theme.__info_file))\n                   .map(({id, __info_file}) => think.extend({id}, think.require(__info_file)));\n    return this.success(themes);\n  }\n}\n"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/config/view.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;kBAIe;AACb,QAAM,UADO;AAEb,gBAAc,WAFD;AAGb,YAAU,OAHG;AAIb,aAAW,GAJE;AAKb,aAAW,MAAM,SAAN,GAAkB,OALhB;AAMb,WAAS;AACP,cAAU;AACR,iBAAW,mBAAC,QAAD,EAAW,GAAX;AAAA,eAAmB,IAAI,SAAJ,CAAc,KAAd,EAAqB;AAAA,iBAAS,IAAI,IAAJ,CAAS,IAAT,CAAD,CAAiB,WAAjB,EAAR;AAAA,SAArB,CAAnB;AAAA;AADH;AADH;AANI,C",
+    "file": "../../../src/common/config/view.js",
+    "sourcesContent": [
+        "'use strict';\n/**\n * template config\n */\nexport default {\n  type: 'nunjucks',\n  content_type: 'text/html',\n  file_ext: '.html',\n  file_depr: '_',\n  root_path: think.ROOT_PATH + '/view',\n  adapter: {\n    nunjucks: {\n      prerender: (nunjucks, env) => env.addFilter('utc', time => (new Date(time)).toUTCString())\n    }\n  }\n};\n"
+    ]
+}
